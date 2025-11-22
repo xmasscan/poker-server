@@ -119,14 +119,27 @@ mod tests {
     #[test]
     // Constructor test
     fn playingcard_construct() {
-        // Manually constructed PlayingCard
-        let manual_card = PlayingCard {
-            suit: Suit::Heart,
-            value: 7,
-        };
-        let construct_card = PlayingCard::new(Suit::Heart, 7);
-
-        assert!(matches!(manual_card.get_suit(), Suit::Heart));
-        assert_eq!(manual_card.get_value(), construct_card.get_value());
+        for i in 0..4 {
+            let current_suit = match i {
+                0 => Suit::Club,
+                1 => Suit::Spade,
+                2 => Suit::Heart,
+                _ => Suit::Diamond,
+            };
+            for j in 1..14 {
+                // Create Playing Card Manually
+                let manual_card = PlayingCard {
+                    suit: current_suit,
+                    value: j,
+                };
+                // Create card with constructor
+                let construct_card = PlayingCard::new(current_suit, j);
+                assert_eq!(
+                    manual_card.get_suit().to_string(),
+                    construct_card.get_suit().to_string()
+                );
+                assert_eq!(manual_card.get_value(), construct_card.get_value());
+            }
+        }
     }
 }
