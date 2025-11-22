@@ -83,31 +83,37 @@ mod tests {
     // Special case formatting
     #[test]
     fn playingcard_print() {
-        let card_ace = PlayingCard {
-            suit: Suit::Club,
-            value: 1,
-        };
-        let card_jack = PlayingCard {
-            suit: Suit::Club,
-            value: 11,
-        };
-        let card_queen = PlayingCard {
-            suit: Suit::Club,
-            value: 12,
-        };
-        let card_king = PlayingCard {
-            suit: Suit::Club,
-            value: 13,
-        };
-
-        // Testing for Ace case
-        assert_eq!(card_ace.to_string(), String::from("Ace of Clubs"));
-        // Jack case
-        assert_eq!(card_jack.to_string(), String::from("Jack of Clubs"));
-        // Queen case
-        assert_eq!(card_queen.to_string(), String::from("Queen of Clubs"));
-        // King case
-        assert_eq!(card_king.to_string(), String::from("King of Clubs"));
+        for i in 0..4 {
+            let current_suit = match i {
+                0 => Suit::Club,
+                1 => Suit::Spade,
+                2 => Suit::Heart,
+                _ => Suit::Diamond,
+            };
+            for j in 1..14 {
+                let card = PlayingCard {
+                    suit: current_suit,
+                    value: j,
+                };
+                match j {
+                    1 => {
+                        assert_eq!(card.to_string(), format!("Ace of {current_suit}s"));
+                    }
+                    11 => {
+                        assert_eq!(card.to_string(), format!("Jack of {current_suit}s"))
+                    }
+                    12 => {
+                        assert_eq!(card.to_string(), format!("Queen of {current_suit}s"));
+                    }
+                    13 => {
+                        assert_eq!(card.to_string(), format!("King of {current_suit}s"));
+                    }
+                    _ => {
+                        assert_eq!(card.to_string(), format!("{j} of {current_suit}s"));
+                    }
+                }
+            }
+        }
     }
 
     #[test]
